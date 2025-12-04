@@ -8,59 +8,70 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            int firstNum = 0;
-            int secondNum = 0;
+            int firstNum = inputInt(scanner, "첫 번째 숫자를 입력하세요: ");
+            int secondNum = inputInt(scanner, "두 번째 숫자를 입력해주세요: ");
+            String operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
+
             try {
-                System.out.print("첫 번째 숫자를 입력하세요: ");
-                firstNum = scanner.nextInt();
-                if (firstNum < 0) {
-                    throw new InputMismatchException();
-                }
-                System.out.print("두 번째 숫자를 입력하세요: ");
-                secondNum = scanner.nextInt();
-                if (secondNum < 0) {
-                    throw new InputMismatchException();
-                }
-            } catch (InputMismatchException inputMismatchException) {
-                System.out.println("올바른 숫자를 입력해 주세요.");
-                scanner.nextLine();
+                int result = calculate(firstNum, secondNum, operator);
+                System.out.println("결과: " + result);
+            }  catch (InputMismatchException e) {
+                System.out.println(e.getMessage());
             }
 
-            String operator = "";
-            try {
-                System.out.print("사칙연산 기호를 입력하세요: ");
-                operator = scanner.next();
-                if (!(operator.equals("+") || operator.equals("-") || operator.equals("x") || operator.equals("/"))) {
-                    throw new InputMismatchException();
-                }
-            }  catch (InputMismatchException inputMismatchException) {
-                System.out.println("올바른 연산기호를 입력해 주세요.");
-            }
-
-            int result = 0;
-            try {
-                result = switch (operator) {
-                    case "+" -> firstNum + secondNum;
-                    case "-" -> firstNum - secondNum;
-                    case "x" -> firstNum * secondNum;
-                    case "/" -> {
-                        if (secondNum == 0) {
-                            throw new InputMismatchException();
-                        }
-                        yield firstNum / secondNum;
-                    }
-                    default -> result;
-                };
-            } catch (InputMismatchException inputMismatchException) {
-                System.out.println("분모를 0으로 나눌 수 없습니다.");
-            }
-
-            System.out.println("결과: " + result);
             System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
             String answer = scanner.next();
             if (answer.equalsIgnoreCase("exit")) {
                 break;
             }
         }
+    }
+
+    public static int inputInt(Scanner scanner, String message) {
+        while (true) {
+            try {
+                System.out.print(message);
+                int num = scanner.nextInt();
+                if (num < 0) {
+                    throw new InputMismatchException();
+                }
+                return num;
+            } catch (InputMismatchException inputMismatchException) {
+                System.out.println("올바른 숫자를 입력해 주세요.");
+                scanner.nextLine();
+            }
+        }
+    }
+
+    public static String inputOperator(Scanner scanner, String message) {
+        while (true) {
+            try {
+                System.out.print(message);
+                String operator = scanner.next();
+                if (!(operator.equals("+") || operator.equals("-") || operator.equals("x") || operator.equals("/"))) {
+                    throw new InputMismatchException();
+                }
+                return operator;
+            } catch (InputMismatchException inputMismatchException) {
+                System.out.println("올바른 연산기호를 입력해 주세요.");
+            }
+        }
+    }
+
+    public static int calculate(int firstNum, int secondNum, String operator) {
+        int result = 0;
+        result = switch (operator) {
+            case "+" -> firstNum + secondNum;
+            case "-" -> firstNum - secondNum;
+            case "x" -> firstNum * secondNum;
+            case "/" -> {
+                if (secondNum == 0) {
+                    throw new InputMismatchException("분모를 0으로 나눌 수 없습니다.");
+                }
+                yield firstNum / secondNum;
+            }
+            default -> result;
+        };
+        return result;
     }
 }
