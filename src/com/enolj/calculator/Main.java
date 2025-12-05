@@ -22,7 +22,7 @@ public class Main {
             switch ((int) num) {
                 case 1:
                     double firstNum = inputNumber(scanner, "첫 번째 숫자를 입력하세요: ");
-                    double secondNum = inputNumber(scanner, "두 번째 숫자를 입력해주세요: ");
+                    double secondNum = inputNumber(scanner, "두 번째 숫자를 입력하세요: ");
                     OperatorType operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
                     try {
                         double result = calculator.calculate(firstNum, secondNum, operator);
