@@ -21,8 +21,7 @@ public class Main {
                 case 1:
                     int firstNum = inputInt(scanner, "첫 번째 숫자를 입력하세요: ");
                     int secondNum = inputInt(scanner, "두 번째 숫자를 입력해주세요: ");
-                    String operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
-
+                    OperatorType operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
                     try {
                         int result = calculator.calculate(firstNum, secondNum, operator);
                         calculator.addHistory(result);
@@ -63,16 +62,13 @@ public class Main {
         }
     }
 
-    public static String inputOperator(Scanner scanner, String message) {
+    public static OperatorType inputOperator(Scanner scanner, String message) {
         while (true) {
             try {
                 System.out.print(message);
                 String operator = scanner.next();
-                if (!(operator.equals("+") || operator.equals("-") || operator.equals("x") || operator.equals("/"))) {
-                    throw new InputMismatchException();
-                }
-                return operator;
-            } catch (InputMismatchException inputMismatchException) {
+                return OperatorType.from(operator);
+            } catch (IllegalArgumentException illegalArgumentException) {
                 System.out.println("올바른 연산기호를 입력해 주세요.");
             }
         }

@@ -8,13 +8,13 @@ public class Calculator {
 
     private List<Integer> history = new ArrayList<>();
 
-    public int calculate(int firstNum, int secondNum, String operator) {
+    public int calculate(int firstNum, int secondNum, OperatorType operatorType) {
         int result = 0;
-        result = switch (operator) {
-            case "+" -> firstNum + secondNum;
-            case "-" -> firstNum - secondNum;
-            case "x" -> firstNum * secondNum;
-            case "/" -> {
+        result = switch (operatorType) {
+            case PLUS -> firstNum + secondNum;
+            case MINUS -> firstNum - secondNum;
+            case MULTIPLY -> firstNum * secondNum;
+            case DIVIDE -> {
                 if (secondNum == 0) {
                     throw new InputMismatchException("분모를 0으로 나눌 수 없습니다.");
                 }
