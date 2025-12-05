@@ -28,4 +28,8 @@ public class Calculator {
     public void addHistory(Integer history) {
         this.history.add(history);
     }
+
+    public List<Integer> getHistory() {
+        return history;
+    }
 }

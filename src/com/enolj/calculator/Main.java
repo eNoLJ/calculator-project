@@ -6,25 +6,38 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Calculator calculator = new Calculator();
+        boolean running = true;
 
-        while (true) {
-            int firstNum = inputInt(scanner, "첫 번째 숫자를 입력하세요: ");
-            int secondNum = inputInt(scanner, "두 번째 숫자를 입력해주세요: ");
-            String operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
+        while (running) {
+            System.out.println();
+            System.out.println("1. 계산하기");
+            System.out.println("2. 연산 결과 이력 보기");
+            System.out.println("3. 종료");
+            int num = inputInt(scanner, "입력: ");
 
-            try {
-                Calculator calculator = new Calculator();
-                int result = calculator.calculate(firstNum, secondNum, operator);
-                calculator.addHistory(result);
-                System.out.println("결과: " + result);
-            }  catch (InputMismatchException e) {
-                System.out.println(e.getMessage());
-            }
+            switch (num) {
+                case 1:
+                    int firstNum = inputInt(scanner, "첫 번째 숫자를 입력하세요: ");
+                    int secondNum = inputInt(scanner, "두 번째 숫자를 입력해주세요: ");
+                    String operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
 
-            System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
-            String answer = scanner.next();
-            if (answer.equalsIgnoreCase("exit")) {
-                break;
+                    try {
+                        int result = calculator.calculate(firstNum, secondNum, operator);
+                        calculator.addHistory(result);
+                        System.out.println("결과: " + result);
+                    }  catch (InputMismatchException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 2:
+                    System.out.println(calculator.getHistory());
+                    break;
+                case 3:
+                    running = false;
+                    break;
+                default:
+                    System.out.println("메뉴를 다시 선택해 주세요");
             }
         }
     }
