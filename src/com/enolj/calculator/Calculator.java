@@ -3,6 +3,7 @@ package com.enolj.calculator;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Calculator<T extends Number> {
 
@@ -37,5 +38,12 @@ public class Calculator<T extends Number> {
 
     public void removeHistory(int i) {
         this.history.remove(i);
+    }
+
+    public List<Double> findGreaterThan(Double number) {
+        return history.stream()
+                .map(Number::doubleValue)
+                .filter(x -> x > number)
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,7 @@
 package com.enolj.calculator;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -14,13 +15,14 @@ public class Main {
             System.out.println("1. 계산하기");
             System.out.println("2. 연산 결과 이력 보기");
             System.out.println("3. 첫 번째 연산 결과 삭제");
-            System.out.println("4. 종료");
-            double num = inputInt(scanner, "입력: ");
+            System.out.println("4. 입력값보다 큰 결과값 출력");
+            System.out.println("5. 종료");
+            double num = inputNumber(scanner, "입력: ");
 
             switch ((int) num) {
                 case 1:
-                    double firstNum = inputInt(scanner, "첫 번째 숫자를 입력하세요: ");
-                    double secondNum = inputInt(scanner, "두 번째 숫자를 입력해주세요: ");
+                    double firstNum = inputNumber(scanner, "첫 번째 숫자를 입력하세요: ");
+                    double secondNum = inputNumber(scanner, "두 번째 숫자를 입력해주세요: ");
                     OperatorType operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
                     try {
                         double result = calculator.calculate(firstNum, secondNum, operator);
@@ -42,6 +44,11 @@ public class Main {
                     }
                     break;
                 case 4:
+                    double number = inputNumber(scanner, "수를 입력해 주세요: ");
+                    List<Double> list = calculator.findGreaterThan(number);
+                    System.out.println(list);
+                    break;
+                case 5:
                     running = false;
                     break;
                 default:
@@ -50,7 +57,7 @@ public class Main {
         }
     }
 
-    public static double inputInt(Scanner scanner, String message) {
+    public static double inputNumber(Scanner scanner, String message) {
         while (true) {
             try {
                 System.out.print(message);
@@ -74,6 +81,7 @@ public class Main {
                 return OperatorType.from(operator);
             } catch (IllegalArgumentException illegalArgumentException) {
                 System.out.println("올바른 연산기호를 입력해 주세요.");
+                scanner.nextLine();
             }
         }
     }
