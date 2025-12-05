@@ -13,7 +13,9 @@ public class Main {
             String operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
 
             try {
-                int result = calculate(firstNum, secondNum, operator);
+                Calculator calculator = new Calculator();
+                int result = calculator.calculate(firstNum, secondNum, operator);
+                calculator.addHistory(result);
                 System.out.println("결과: " + result);
             }  catch (InputMismatchException e) {
                 System.out.println(e.getMessage());
@@ -56,22 +58,5 @@ public class Main {
                 System.out.println("올바른 연산기호를 입력해 주세요.");
             }
         }
-    }
-
-    public static int calculate(int firstNum, int secondNum, String operator) {
-        int result = 0;
-        result = switch (operator) {
-            case "+" -> firstNum + secondNum;
-            case "-" -> firstNum - secondNum;
-            case "x" -> firstNum * secondNum;
-            case "/" -> {
-                if (secondNum == 0) {
-                    throw new InputMismatchException("분모를 0으로 나눌 수 없습니다.");
-                }
-                yield firstNum / secondNum;
-            }
-            default -> result;
-        };
-        return result;
     }
 }

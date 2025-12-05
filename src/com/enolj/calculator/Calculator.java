@@ -6,9 +6,9 @@ import java.util.List;
 
 public class Calculator {
 
-    private List<String> history = new ArrayList<>();
+    private List<Integer> history = new ArrayList<>();
 
-    public static int calculate(int firstNum, int secondNum, String operator) {
+    public int calculate(int firstNum, int secondNum, String operator) {
         int result = 0;
         result = switch (operator) {
             case "+" -> firstNum + secondNum;
@@ -23,5 +23,9 @@ public class Calculator {
             default -> result;
         };
         return result;
+    }
+
+    public void addHistory(Integer history) {
+        this.history.add(history);
     }
 }
