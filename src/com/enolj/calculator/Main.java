@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Calculator calculator = new Calculator();
+        Calculator<Number> calculator = new Calculator<>();
         boolean running = true;
 
         while (running) {
@@ -15,15 +15,15 @@ public class Main {
             System.out.println("2. 연산 결과 이력 보기");
             System.out.println("3. 첫 번째 연산 결과 삭제");
             System.out.println("4. 종료");
-            int num = inputInt(scanner, "입력: ");
+            double num = inputInt(scanner, "입력: ");
 
-            switch (num) {
+            switch ((int) num) {
                 case 1:
-                    int firstNum = inputInt(scanner, "첫 번째 숫자를 입력하세요: ");
-                    int secondNum = inputInt(scanner, "두 번째 숫자를 입력해주세요: ");
+                    double firstNum = inputInt(scanner, "첫 번째 숫자를 입력하세요: ");
+                    double secondNum = inputInt(scanner, "두 번째 숫자를 입력해주세요: ");
                     OperatorType operator = inputOperator(scanner, "사칙연산 기호를 입력하세요: ");
                     try {
-                        int result = calculator.calculate(firstNum, secondNum, operator);
+                        double result = calculator.calculate(firstNum, secondNum, operator);
                         calculator.addHistory(result);
                         System.out.println("결과: " + result);
                     }  catch (InputMismatchException e) {
@@ -34,8 +34,12 @@ public class Main {
                     System.out.println(calculator.getHistory());
                     break;
                 case 3:
-                    calculator.removeHistory(0);
-                    System.out.println("첫 번째 연산 결과를 삭제했습니다.");
+                    try {
+                        calculator.removeHistory(0);
+                        System.out.println("첫 번째 연산 결과를 삭제했습니다.");
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("삭제할 이력이 없습니다.");
+                    }
                     break;
                 case 4:
                     running = false;
@@ -46,11 +50,11 @@ public class Main {
         }
     }
 
-    public static int inputInt(Scanner scanner, String message) {
+    public static double inputInt(Scanner scanner, String message) {
         while (true) {
             try {
                 System.out.print(message);
-                int num = scanner.nextInt();
+                double num = scanner.nextDouble();
                 if (num < 0) {
                     throw new InputMismatchException();
                 }

@@ -4,32 +4,34 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 
-public class Calculator {
+public class Calculator<T extends Number> {
 
-    private List<Integer> history = new ArrayList<>();
+    private List<T> history = new ArrayList<>();
 
-    public int calculate(int firstNum, int secondNum, OperatorType operatorType) {
-        int result = 0;
+    public double calculate(T firstNum, T secondNum, OperatorType operatorType) {
+        double result = 0;
+        double x = firstNum.doubleValue();
+        double y = secondNum.doubleValue();
+
         result = switch (operatorType) {
-            case PLUS -> firstNum + secondNum;
-            case MINUS -> firstNum - secondNum;
-            case MULTIPLY -> firstNum * secondNum;
+            case PLUS -> x + y;
+            case MINUS -> x - y;
+            case MULTIPLY -> x * y;
             case DIVIDE -> {
-                if (secondNum == 0) {
+                if (y == 0) {
                     throw new InputMismatchException("분모를 0으로 나눌 수 없습니다.");
                 }
-                yield firstNum / secondNum;
+                yield x / y;
             }
-            default -> result;
         };
         return result;
     }
 
-    public void addHistory(Integer history) {
+    public void addHistory(T history) {
         this.history.add(history);
     }
 
-    public List<Integer> getHistory() {
+    public List<T> getHistory() {
         return history;
     }
 
