@@ -32,4 +32,8 @@ public class Calculator {
     public List<Integer> getHistory() {
         return history;
     }
+
+    public void removeHistory(int i) {
+        this.history.remove(i);
+    }
 }

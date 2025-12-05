@@ -13,7 +13,8 @@ public class Main {
             System.out.println();
             System.out.println("1. 계산하기");
             System.out.println("2. 연산 결과 이력 보기");
-            System.out.println("3. 종료");
+            System.out.println("3. 첫 번째 연산 결과 삭제");
+            System.out.println("4. 종료");
             int num = inputInt(scanner, "입력: ");
 
             switch (num) {
@@ -34,6 +35,10 @@ public class Main {
                     System.out.println(calculator.getHistory());
                     break;
                 case 3:
+                    calculator.removeHistory(0);
+                    System.out.println("첫 번째 연산 결과를 삭제했습니다.");
+                    break;
+                case 4:
                     running = false;
                     break;
                 default:
